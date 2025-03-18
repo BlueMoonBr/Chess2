@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://br2fbkufrybo1"]
+
+[ext_resource type="Script" uid="uid://cys30htyoiicr" path="res://scripts/ChessBoard.gd" id="1_5t1fc"]
+[ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/white_bishop.png" id="1_aecfi"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ChessBoard" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ChessBoard"]
+position = Vector2(574, 70)
+texture = ExtResource("1_aecfi")
+script = ExtResource("1_5t1fc")
+
+[node name="Control" type="Control" parent="ChessBoard"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 725.0
+offset_top = 157.0
+offset_right = 838.0
+offset_bottom = 254.0
+tooltip_text = "asddsfhdfgsdfg"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BtnMultiplayer" type="Button" parent="CanvasLayer"]
+offset_right = 239.0
+offset_bottom = 79.0
+text = "Ativar Multiplayer"
+
+[node name="BtnServer" type="Button" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 89.0
+offset_right = 222.0
+offset_bottom = 135.0
+disabled = true
+text = "Iniciar Servidor
+"
+
+[node name="BtnClient" type="Button" parent="CanvasLayer"]
+offset_left = 19.0
+offset_top = 188.0
+offset_right = 224.0
+offset_bottom = 238.0
+disabled = true
+text = "Conectar como Cliente"
+
+[node name="txtIpServer" type="LineEdit" parent="CanvasLayer"]
+offset_left = 21.0
+offset_top = 246.0
+offset_right = 219.0
+offset_bottom = 277.0
+placeholder_text = "IP: 127.0.0.1"
+
+[node name="txtIpPort" type="LineEdit" parent="CanvasLayer"]
+visible = false
+offset_left = 21.0
+offset_top = 144.0
+offset_right = 219.0
+offset_bottom = 175.0
+placeholder_text = "port"
+
+[connection signal="pressed" from="CanvasLayer/BtnMultiplayer" to="ChessBoard/Sprite2D" method="_on_BtnMultiplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/BtnServer" to="ChessBoard/Sprite2D" method="_on_BtnServer_pressed"]
+[connection signal="pressed" from="CanvasLayer/BtnClient" to="ChessBoard/Sprite2D" method="_on_BtnClient_pressed"]
