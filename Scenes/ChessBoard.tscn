@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://br2fbkufrybo1"]
 
-[ext_resource type="Script" uid="uid://b2t0kr2qhhist" path="res://Scenes/ChessRoot.gd" id="1_3pvfr"]
+[ext_resource type="Script" uid="uid://b2t0kr2qhhist" path="res://scripts/ChessRoot.gd" id="1_3pvfr"]
 [ext_resource type="Script" uid="uid://cys30htyoiicr" path="res://scripts/ChessBoard.gd" id="1_5t1fc"]
 [ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/white_bishop.png" id="1_aecfi"]
 
