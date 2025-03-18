@@ -6,20 +6,14 @@ const TILE_SIZE = 64
 var tiles = {}
 var buttons = {}
 
-@onready var btn_server = $"../../CanvasLayer/BtnServer"
-@onready var btn_client = $"../../CanvasLayer/BtnClient"
-@onready var txt_ip_server = $"../../CanvasLayer/txtIpServer"
+@onready var btn_server = $"../CanvasLayer/BtnServer"
+@onready var btn_client = $"../CanvasLayer/BtnClient"
+@onready var txt_ip_server = $"../CanvasLayer/txtIpServer"
 
 func _ready():
 	generate_board()
 	update_edge_buttons()
-	
-	# Oculta os botões no início
-	btn_server.hide()
-	btn_client.hide()
-	txt_ip_server.hide()
 
-@rpc("any_peer", "call_remote", "reliable")
 func rpc_create_tile(row, col):
 	var pos = Vector2(col * TILE_SIZE, row * TILE_SIZE)
 	create_tile(row, col, pos.x, pos.y)
@@ -34,8 +28,7 @@ func request_create_tile(row, col):
 		rpc_create_tile(row, col)
 		
 func generate_board():
-	var board_pixel_size = BOARD_SIZE * TILE_SIZE
-	
+
 	var start_x = 0
 	var start_y = 0
 	
@@ -92,12 +85,34 @@ func create_button(row, col, position):
 	button.position = position + Vector2((TILE_SIZE - 20)/2, (TILE_SIZE - 20)/2)
 	add_child(button)
 	buttons["%d_%d" % [row, col]] = button
-	button.pressed.connect(func(): add_tile_and_update(row, col))
+	
+	button.pressed.connect(func():
+		if multiplayer.multiplayer_peer:
+			if multiplayer.is_server():
+				# Servidor cria localmente e avisa clientes
+				get_node("/root/ChessRoot").rpc_create_tile(row, col)
+				get_node("/root/ChessRoot").rpc_create_tile.rpc(row, col)
+			else:
+				# Cliente pede ao servidor para criar
+				get_node("/root/ChessRoot").request_create_tile.rpc_id(1, row, col)
+		else:
+			# Sem multiplayer, cria localmente mesmo
+			add_tile_and_update(row, col)
+	)
 
 func add_tile_and_update(row, col):
-	create_tile(row, col, col * TILE_SIZE, row * TILE_SIZE)
-	update_tile_neighbors()
-	update_edge_buttons()
+	if multiplayer.multiplayer_peer:
+		if multiplayer.is_server():
+			# Servidor cria localmente e informa clientes
+			rpc_create_tile(row, col)
+		else:
+			# Cliente pede ao servidor para criar
+			request_create_tile.rpc_id(1, row, col)
+	else:
+		# Sem multiplayer, cria localmente mesmo
+		create_tile(row, col, col * TILE_SIZE, row * TILE_SIZE)
+		update_tile_neighbors()
+		update_edge_buttons()
 
 
 func _on_BtnMultiplayer_pressed():
@@ -112,9 +127,12 @@ func _on_BtnMultiplayer_pressed():
 # Sinais para os novos botões (conecte-os na interface visual igual antes):
 func _on_BtnServer_pressed():
 	print("Servidor iniciado.")
+	btn_client.hide();
+	txt_ip_server.hide();
 	iniciar_servidor()
 
 func _on_BtnClient_pressed():
+	btn_server.hide();
 	print("Cliente conectado.")
 	conectar_cliente()
 
@@ -125,6 +143,7 @@ func iniciar_servidor():
 	if erro != OK:
 		print("Erro ao criar servidor: ", erro)
 		return
+		
 	multiplayer.multiplayer_peer = peer
 	print("Servidor iniciado com sucesso na porta 4242.")
 
