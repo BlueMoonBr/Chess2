@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b2t0kr2qhhist" path="res://scripts/ChessRoot.gd" id="1_3pvfr"]
 [ext_resource type="Script" uid="uid://cys30htyoiicr" path="res://scripts/ChessBoard.gd" id="1_5t1fc"]
-[ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/white_bishop.png" id="1_aecfi"]
+[ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/Pieces/bishop.png" id="1_aecfi"]
 
 [node name="ChessRoot" type="Node2D"]
 script = ExtResource("1_3pvfr")

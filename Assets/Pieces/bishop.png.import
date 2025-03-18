@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3tea0lyxsimu"
-path="res://.godot/imported/white_bishop.png-edfab6f53c903e2e980288735ad96b1a.ctex"
+path="res://.godot/imported/bishop.png-1ab85a6c810b6bb857311a982778f6cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/white_bishop.png"
-dest_files=["res://.godot/imported/white_bishop.png-edfab6f53c903e2e980288735ad96b1a.ctex"]
+source_file="res://Assets/Pieces/bishop.png"
+dest_files=["res://.godot/imported/bishop.png-1ab85a6c810b6bb857311a982778f6cc.ctex"]
 
 [params]
 
