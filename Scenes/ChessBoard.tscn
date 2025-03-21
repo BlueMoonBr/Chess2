@@ -1,55 +1,138 @@
-[gd_scene load_steps=4 format=3 uid="uid://br2fbkufrybo1"]
+[gd_scene load_steps=9 format=3 uid="uid://br2fbkufrybo1"]
 
-[ext_resource type="Script" uid="uid://b2t0kr2qhhist" path="res://Scripts/ChessRoot.gd" id="1_3pvfr"]
-[ext_resource type="Script" uid="uid://cys30htyoiicr" path="res://Scripts/ChessBoard.gd" id="1_5t1fc"]
+[ext_resource type="Script" uid="uid://b2t0kr2qhhist" path="res://Scritps/ChessRoot.gd" id="1_3pvfr"]
+[ext_resource type="Script" uid="uid://cys30htyoiicr" path="res://Scritps/ChessBoard.gd" id="1_5t1fc"]
 [ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/Pieces/bishop.png" id="1_aecfi"]
+[ext_resource type="Texture2D" uid="uid://ndv8tjccqw5p" path="res://Assets/Pieces/pawn.png" id="10_j0o8s"]
+[ext_resource type="Texture2D" uid="uid://1xaaigb8g37r" path="res://Assets/Pieces/rook.png" id="11_2bw70"]
+[ext_resource type="Texture2D" uid="uid://7yvobt62i7dn" path="res://Assets/Pieces/king.png" id="11_ibikg"]
+[ext_resource type="Texture2D" uid="uid://d1mcqyif15iui" path="res://Assets/Pieces/knight.png" id="12_wqotx"]
+[ext_resource type="Texture2D" uid="uid://bjqenf11rvaoj" path="res://Assets/Pieces/queen.png" id="13_nn40u"]
 
 [node name="ChessRoot" type="Node2D"]
 script = ExtResource("1_3pvfr")
+selected_piece_type = 1
+selected_piece_color = 0
 
 [node name="ChessBoard" type="Sprite2D" parent="."]
 position = Vector2(574, 70)
 texture = ExtResource("1_aecfi")
 script = ExtResource("1_5t1fc")
+board_size = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="BtnMultiplayer" type="Button" parent="CanvasLayer"]
-offset_right = 239.0
-offset_bottom = 79.0
+[node name="MainUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="menu" type="VBoxContainer" parent="CanvasLayer/MainUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnMultiplayer" type="Button" parent="CanvasLayer/MainUI/menu"]
+layout_mode = 2
 text = "Ativar Multiplayer"
 
-[node name="BtnServer" type="Button" parent="CanvasLayer"]
-offset_left = 18.0
-offset_top = 89.0
-offset_right = 222.0
-offset_bottom = 135.0
+[node name="BtnServer" type="Button" parent="CanvasLayer/MainUI/menu"]
+layout_mode = 2
 text = "Iniciar Servidor
 "
 
-[node name="BtnClient" type="Button" parent="CanvasLayer"]
-offset_left = 19.0
-offset_top = 188.0
-offset_right = 224.0
-offset_bottom = 238.0
-text = "Conectar como Cliente"
-
-[node name="txtIpServer" type="LineEdit" parent="CanvasLayer"]
-offset_left = 21.0
-offset_top = 246.0
-offset_right = 219.0
-offset_bottom = 277.0
-placeholder_text = "IP: 127.0.0.1"
-
-[node name="txtIpPort" type="LineEdit" parent="CanvasLayer"]
+[node name="txtIpPort" type="LineEdit" parent="CanvasLayer/MainUI/menu"]
 visible = false
-offset_left = 21.0
-offset_top = 144.0
-offset_right = 219.0
-offset_bottom = 175.0
+layout_mode = 2
 placeholder_text = "port"
 
+[node name="BtnClient" type="Button" parent="CanvasLayer/MainUI/menu"]
+layout_mode = 2
+text = "Conectar como Cliente"
+
+[node name="txtIpServer" type="LineEdit" parent="CanvasLayer/MainUI/menu"]
+layout_mode = 2
+placeholder_text = "IP: 127.0.0.1"
+
+[node name="cards" type="HBoxContainer" parent="CanvasLayer/MainUI"]
+layout_mode = 0
+offset_top = 464.0
+offset_right = 280.0
+offset_bottom = 648.0
+alignment = 1
+
+[node name="WHITE" type="MenuButton" parent="CanvasLayer/MainUI/cards"]
+layout_mode = 2
+text = "PEÇAS BRANCAS"
+flat = false
+switch_on_hover = true
+item_count = 6
+popup/item_0/text = "PAWN"
+popup/item_0/icon = ExtResource("10_j0o8s")
+popup/item_0/id = 0
+popup/item_1/text = "ROOK"
+popup/item_1/icon = ExtResource("11_2bw70")
+popup/item_1/id = 1
+popup/item_2/text = "KNIGHT"
+popup/item_2/icon = ExtResource("12_wqotx")
+popup/item_2/id = 2
+popup/item_3/text = "BISHOP"
+popup/item_3/icon = ExtResource("1_aecfi")
+popup/item_3/id = 3
+popup/item_4/text = "QUEEN"
+popup/item_4/icon = ExtResource("13_nn40u")
+popup/item_4/id = 4
+popup/item_5/text = "KING"
+popup/item_5/icon = ExtResource("11_ibikg")
+popup/item_5/id = 5
+
+[node name="BLACK" type="MenuButton" parent="CanvasLayer/MainUI/cards"]
+layout_mode = 2
+text = "PEÇAS PRETAS "
+flat = false
+switch_on_hover = true
+item_count = 6
+popup/item_0/text = "PAWN"
+popup/item_0/icon = ExtResource("10_j0o8s")
+popup/item_0/id = 0
+popup/item_1/text = "ROOK"
+popup/item_1/icon = ExtResource("11_2bw70")
+popup/item_1/id = 1
+popup/item_2/text = "KNIGHT"
+popup/item_2/icon = ExtResource("12_wqotx")
+popup/item_2/id = 2
+popup/item_3/text = "BISHOP"
+popup/item_3/icon = ExtResource("1_aecfi")
+popup/item_3/id = 3
+popup/item_4/text = "QUEEN"
+popup/item_4/icon = ExtResource("13_nn40u")
+popup/item_4/id = 4
+popup/item_5/text = "KING"
+popup/item_5/icon = ExtResource("11_ibikg")
+popup/item_5/id = 5
+
+[node name="cardsMenu" type="MenuButton" parent="CanvasLayer/MainUI/cards"]
+layout_mode = 2
+text = "Cartas               "
+flat = false
+switch_on_hover = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainUI"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 160.0
+offset_right = 168.0
+offset_bottom = 312.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MainUI/VBoxContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("1_aecfi")
+expand_mode = 4
+
 [connection signal="ready" from="." to="." method="_on_ready"]
-[connection signal="pressed" from="CanvasLayer/BtnMultiplayer" to="ChessBoard" method="_on_BtnMultiplayer_pressed"]
-[connection signal="pressed" from="CanvasLayer/BtnServer" to="ChessBoard" method="_on_BtnServer_pressed"]
-[connection signal="pressed" from="CanvasLayer/BtnClient" to="ChessBoard" method="_on_BtnClient_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainUI/menu/BtnMultiplayer" to="ChessBoard" method="_on_BtnMultiplayer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainUI/menu/BtnServer" to="ChessBoard" method="_on_BtnServer_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainUI/menu/BtnClient" to="ChessBoard" method="_on_BtnClient_pressed"]

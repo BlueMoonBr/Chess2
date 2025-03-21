@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://csg3ix4be4bm0"]
+
+[ext_resource type="Script" uid="uid://ddychbwjv42d0" path="res://Scritps/Pieces/Bishop.gd" id="1_u5b1v"]
+[ext_resource type="Texture2D" uid="uid://3tea0lyxsimu" path="res://Assets/Pieces/bishop.png" id="2_u2fbb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8f4tx"]
+radius = 23.9
+
+[node name="Bishop" type="Area2D"]
+script = ExtResource("1_u5b1v")
+piece_color = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.00872665
+scale = Vector2(4.055, 4.055)
+skew = 0.20944
+texture = ExtResource("2_u2fbb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_8f4tx")

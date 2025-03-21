@@ -11,9 +11,22 @@ config_version=5
 [application]
 
 config/name="Chess2"
+config/version="0.0.1"
 run/main_scene="uid://br2fbkufrybo1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Globals="*res://Scritps/Globals.gd"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "green",
+"res://Scenes/": "purple",
+"res://Scritps/Pieces/": "yellow"
+}
 
 [rendering]
 

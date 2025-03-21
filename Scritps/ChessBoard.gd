@@ -1,14 +1,18 @@
 extends Node2D
 
-const BOARD_SIZE = 8
+@export var board_size  = 8 
+
 const TILE_SIZE = 64
 
 var tiles = {}
 var buttons = {}
 
-@onready var btn_server = $"../CanvasLayer/BtnServer"
-@onready var btn_client = $"../CanvasLayer/BtnClient"
-@onready var txt_ip_server = $"../CanvasLayer/txtIpServer"
+@onready var btn_client = $"../CanvasLayer/MainUI/menu/BtnClient"
+@onready var btn_server = $"../CanvasLayer/MainUI/menu/BtnServer"
+@onready var txt_ip_port = $"../CanvasLayer/MainUI/menu/txtIpPort"
+@onready var txt_ip_server = $"../CanvasLayer/MainUI/menu/txtIpServer"
+
+var tile_scene = preload("res://Scenes/Tile.tscn")
 
 func _ready():
 	generate_board()
@@ -33,8 +37,8 @@ func generate_board():
 	var start_y = 0
 	
 	#Vector2(col * TILE_SIZE, row * TILE_SIZE)
-	for row in range(BOARD_SIZE):
-		for col in range(BOARD_SIZE):
+	for row in range(board_size):
+		for col in range(board_size):
 			create_tile(row, col, start_x + col * TILE_SIZE, start_y + row * TILE_SIZE)
 			
 	# Define vizinhos
@@ -42,10 +46,12 @@ func generate_board():
 
 func create_tile(row, col, x, y):
 	print(row,' ', col,' ', x,' ', y)
-	var tile = Tile.new(row, col)
-	tile.position = Vector2(x, y)
-	add_child(tile)
-	tiles["%d_%d" % [row, col]] = tile
+	
+	var new_tile = tile_scene.instantiate()
+	new_tile.position = Vector2(col * 64, row * 64)
+	new_tile.setup_tile(row, col)
+	add_child(new_tile)
+	tiles["%d_%d" % [row, col]] = new_tile
 
 func update_tile_neighbors():
 	for key in tiles:
@@ -63,21 +69,26 @@ func update_edge_buttons():
 		b.queue_free()
 	buttons.clear()
 
-	# Verifica cada casa e adiciona botões nas posições vazias vizinhas
-	for tile in tiles.values():
-		var directions = {
-			"left": Vector2(-1, 0),
-			"right": Vector2(1, 0),
-			"up": Vector2(0, -1),
-			"down": Vector2(0, 1)
-		}
+	var directions = {
+		"left": Vector2(-1, 0),
+		"right": Vector2(1, 0),
+		"up": Vector2(0, -1),
+		"down": Vector2(0, 1)
+	}
 
+	for tile in tiles.values():
 		for dir in directions:
 			var offset = directions[dir]
-			var neighbor_key = "%d_%d" % [tile.row + int(offset.y), tile.col + int(offset.x)]
-			if not tiles.has(neighbor_key) and not buttons.has(neighbor_key):
-				create_button(tile.row + int(offset.y), tile.col + int(offset.x), tile.position + offset * TILE_SIZE)
+			var neighbor_row = tile.row + int(offset.y)
+			var neighbor_col = tile.col + int(offset.x)
+			var neighbor_key = "%d_%d" % [neighbor_row, neighbor_col]
 
+			if not tiles.has(neighbor_key) and not buttons.has(neighbor_key):
+				# CORREÇÃO aqui:
+				var button_position = tile.position + offset * TILE_SIZE
+				button_position -= Vector2(TILE_SIZE / 2, TILE_SIZE / 2)
+				create_button(neighbor_row, neighbor_col, button_position)
+				
 func create_button(row, col, position):
 	var button = Button.new()
 	button.text = "+"

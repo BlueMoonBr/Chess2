@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://hj6y674guk2n"]
+
+[ext_resource type="Script" uid="uid://drpvlk2mxwu4j" path="res://Scritps/Pieces/Knight.gd" id="1_13nyu"]
+[ext_resource type="Texture2D" uid="uid://d1mcqyif15iui" path="res://Assets/Pieces/knight.png" id="2_8vvtn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8f4tx"]
+radius = 23.9
+
+[node name="Knight" type="Area2D"]
+script = ExtResource("1_13nyu")
+piece_type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.00872665
+scale = Vector2(4.055, 4.055)
+skew = 0.20944
+texture = ExtResource("2_8vvtn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+shape = SubResource("CircleShape2D_8f4tx")
